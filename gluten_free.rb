@@ -27,6 +27,7 @@ class Person
 	# attr_accesor allows these items to be both written and read
 	attr_accessor :name, :allergies
 	def initialize (name, allergies)
+		#try to initialize all your instance veriables in the initialize
 		@stomach = []
 		@allergies = allergies
 		@meal = []
@@ -36,27 +37,40 @@ class Person
 	# Create a method that allows the person to eat and add arrays of food to their stomachs
 	# If a food array contains a known allergy reject the food.
 	def feed (meal)
-		#add the array of the food to their stomach
-		@meal.each	do |ingredient| 
-			if ingredient == @allergies
-				begin 
-					raise AllergyError.new("You cant eat that! You are allergic to #{@allergies}")
-				# rescue AllergyError => error
-				# 	puts "You are allergic to #{error}"
-				end
-			end
-			@stomach << ingredient
+		# add the array of the food to their stomach
+		# @meal.each	do |ingredient| 
+		# begin 
+		# 	if ingredient == @allergies
+		# 		raise AllergyError.new("You cant eat that! You are allergic to #{@allergies}")
+		# 		@stomach = []
+		# 	else
+		# 	@stomach << ingredient
+		# 	end
+		# rescue AllergyError => error
+		# 		puts error
+		# end
 
+		# end
+
+		begin
+			if @meal.include?(@allergies)
+				@stomach = []
+				raise AllergyError.new("You cant eat that! You are allergic to #{@allergies}")
+		 	else
+		 		@stomach << @meal
+		 	end
+		rescue AllergyError => error
+			puts error
 		end
-
 	end
 
 	def eat 
 		puts "What would you like to eat? [1]Pizza, [2]Scallops or [3]Water?"
 
-		# food options:
-		# maybe turn these into a hash for clear purposes
 		food_choice = gets.chomp
+
+		# food options:
+		# maybe turn these into a hash for clearer purposes
 		pizza = ["cheese", "gluten", "tomatoes"]
 		pan_seared_scallops = ["scallops", "lemons", "pasta", "olive oil"]
 		water = ["h", "h", "o"]
