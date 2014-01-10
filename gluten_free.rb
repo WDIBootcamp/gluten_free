@@ -40,11 +40,9 @@ class Person
 		@meal.each	do |ingredient| 
 			if ingredient == @allergies
 				begin 
-					raise AllergyError.new("You cant eat that! 
-						You are allergic to #{@allergies}")
+					raise AllergyError.new("You cant eat that! You are allergic to #{@allergies}")
 				# rescue AllergyError => error
 				# 	puts "You are allergic to #{error}"
-				end
 
 			else 
 			@stomach << @meal
@@ -52,7 +50,7 @@ class Person
 		end
 	end
 
-	def food 
+	def eat 
 		puts "What would you like to eat? [1]Pizza, [2]Scallops or [3]Water?"
 
 		# food options:
@@ -71,8 +69,43 @@ class Person
 		return @meal 
 	end
 
+	def start
+		puts "What is your name?"
+		@name = gets.chomp
+		puts "Are you allergic to: [1] gluten, [2] scallops, or [3] hydrogen?"
+		allergy_choice = gets.chomp
+
+		case allergy_choice
+		when "1" then @allergies = "gluten"
+		when "2" then @allergies = "scallops"
+		when "3" then @allergies = "hydrogen"
+		end
+
+		eat()
+		feed(@meal)
+
+		puts "Do you want to see what is in your stomach?"
+		see_stomach = gets.chomp
+
+		case see_stomach
+		when "yes" then p @stomach
+		when "no" then puts "Ok!"
+		end
+
+		puts " Do you want to eat again?"
+		eat_again = gets.chomp
+
+		case eat_again
+		when "yes" then eat()
+		when "no" then puts "Good Bye then."
+		end
+
+	end
+
 end
- 
+
+new_person = Person.new(@name, @allergies)
+new_person.start()
 
 
 # Create a Person named Chris. Chris is allergic to gluten.
@@ -84,3 +117,5 @@ end
  
 # Bonus: When a person attempts to eat a food they are allergic to,
 #        ... remove ALL the food from the person's stomach before raising the exception
+
+
