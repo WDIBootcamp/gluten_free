@@ -43,11 +43,12 @@ class Person
 					raise AllergyError.new("You cant eat that! You are allergic to #{@allergies}")
 				# rescue AllergyError => error
 				# 	puts "You are allergic to #{error}"
-
-			else 
-			@stomach << @meal
+				end
 			end
+			@stomach << ingredient
+
 		end
+
 	end
 
 	def eat 
@@ -66,7 +67,8 @@ class Person
 		when "3" then @meal = water
 		end
 
-		return @meal 
+		feed(@meal)
+		# return @meal
 	end
 
 	def start
@@ -82,7 +84,6 @@ class Person
 		end
 
 		eat()
-		feed(@meal)
 
 		puts "Do you want to see what is in your stomach?"
 		see_stomach = gets.chomp
